@@ -1,0 +1,15 @@
+.idea
+.idea?
+node_modules
+npm-debug.*
+link-checker-results.txt
+app/**/*.js
+*.js.map
+e2e/**/*.js
+e2e/**/*.js.map
+aot
+ngc
+build
+dist
+.DS_Store
+.DS_Store?
