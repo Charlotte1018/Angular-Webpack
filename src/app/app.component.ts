@@ -1,5 +1,6 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpService } from './service/http.service';
 @Component({
     selector: 'my-app',
     styles: [
@@ -46,11 +47,24 @@ import { ActivatedRoute } from '@angular/router';
         <router-outlet></router-outlet>
     </div>
   `,
+  providers:[HttpService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
     name = 'Angular';
-    constructor( @Inject(ActivatedRoute) public _route: ActivatedRoute) {
+    constructor( @Inject(ActivatedRoute) public _route: ActivatedRoute,
+    private HttpService:HttpService) {
         console.log(this._route)
+    }
+    ngOnInit():void{
+        this.getFetch();
+    }
+    getFetch():void{
+        let msg={
+            url:"http://106.14.139.83:8080/event/findEventAll"
+        }
+        this.HttpService.http(msg).then(data=>{
+            console.log(data);
+        })
     }
 
 }
