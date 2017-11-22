@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from './service/http.service';
+import { Web3Service } from './service/web3.service';
 @Component({
     selector: 'my-app',
     styles: [
@@ -47,16 +48,20 @@ import { HttpService } from './service/http.service';
         <router-outlet></router-outlet>
     </div>
   `,
-  providers:[HttpService]
+  providers:[HttpService,Web3Service]
 })
 export class AppComponent implements OnInit{
     name = 'Angular';
+    web3;
     constructor( @Inject(ActivatedRoute) public _route: ActivatedRoute,
-    private HttpService:HttpService) {
+    private HttpService:HttpService,
+    private Web3Service:Web3Service,) {
         console.log(this._route)
     }
     ngOnInit():void{
+        this.connect();
         this.getFetch();
+        this.getAccounts();
     }
     getFetch():void{
         let msg={
@@ -65,6 +70,16 @@ export class AppComponent implements OnInit{
         this.HttpService.http(msg).then(data=>{
             console.log(data);
         })
+    }
+    connect():void{
+        this.Web3Service.connect('http://localhost:8545');
+        this.web3=this.Web3Service.getWeb3();
+        console.log(this.web3);
+    }
+    getAccounts():void{
+        let eth=this.web3.eth;
+        let acc=eth.accounts;
+        console.log(acc);
     }
 
 }
