@@ -59,9 +59,7 @@ export class AppComponent implements OnInit{
         console.log(this._route)
     }
     ngOnInit():void{
-        this.connect();
         this.getFetch();
-        this.getAccounts();
     }
     getFetch():void{
         let msg={
